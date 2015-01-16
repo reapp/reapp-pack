@@ -26,10 +26,6 @@ module.exports = {
   makeConfig: function(configs, _opts) {
     opts = _opts;
 
-    if (opts.debug) {
-      console.log('Link modules?', opts.linkModules);
-    }
-
     if (opts.linkModules)
       linkModules(opts.dir);
 
@@ -44,7 +40,7 @@ module.exports = {
 
 function _makeConfig(config) {
   if (opts.debug) {
-    console.log('Making webpack config with config:', config);
+    console.log("Making webpack config with:\n", config, "\n");
   }
 
   // LOADERS
@@ -146,9 +142,6 @@ function _makeConfig(config) {
     // trying the new watching plugin
     // new webpack.NewWatchingPlugin(),
 
-    // outputs build stats to ./build/stats.json
-    config.prerender ? statsPlugin(opts, config) : null,
-
     // optimize react building
     new webpack.PrefetchPlugin('react'),
     new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
@@ -160,6 +153,10 @@ function _makeConfig(config) {
       }
     })
   ];
+
+  // outputs build stats to ./build/stats.json
+  if (config.prerender)
+    plugins.push(statsPlugin(opts, config));
 
   // if (config.prerender)
   //   plugins.push(new ReactStylePlugin('bundle.css'));
