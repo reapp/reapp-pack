@@ -2,39 +2,13 @@
 // to let you build different style bundles
 // based on the webpack react example
 
-var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var ReactStylePlugin = require('react-style-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var joinEntry = require('./lib/joinEntry');
 var statsPlugin = require('./lib/statsPlugin');
-
-function configName(mode) {
-  return 'config.' + mode + '.js';
-}
-
-// opts:
-//   dir: directory of project
-//   entry: entrypoint file
-//   wport: port for webpack-dev-server to run on
-//   mode: mode of build
-//   devtool: webpack devtool to use
-//   debug: log extra info
-
-module.exports = function make(opts) {
-  var userConfig = path.join(opts.dir, 'config', configName(opts.mode));
-  var config;
-
-  if (fs.existsSync(userConfig))
-    config = require(userConfig);
-  else
-    config = require(path.join(__dirname, configName(opts.mode)));
-
-  return [].concat(config).map(function(entry) {
-    return makeEntry(entry, opts);
-  });
-};
+var linkModules = require('./lib/linkModules');
 
 // config:
 //   entry: entrypoint file
@@ -46,7 +20,30 @@ module.exports = function make(opts) {
 //   longTermCaching: use hash name with files
 //   minimize: uglify and dedupe
 
-function makeEntry(config, opts) {
+var opts;
+
+module.exports = function(configs, _opts) {
+  opts = _opts;
+
+  if (opts.debug) {
+    console.log('Link modules?', opts.linkModules);
+  }
+
+  if (opts.linkModules)
+    linkModules(opts.dir);
+
+  if (Array.isArray(configs))
+    return configs.map(makeConfig);
+  else
+    return makeConfig(configs);
+}
+
+
+function makeConfig(config) {
+  if (opts.debug) {
+    console.log('Making webpack config with config:', config);
+  }
+
   // LOADERS
   var loaders = [
     { test: /\.json$/, loader: 'json-loader' },
@@ -92,7 +89,7 @@ function makeEntry(config, opts) {
 
   // WEBPACK CONFIG
 
-  var entry = opts.entry || config.entry;
+  var entry = config.entry;
 
   // allow shorthand for single entry
   if (typeof entry === 'string') {

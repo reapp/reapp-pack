@@ -6,6 +6,7 @@
 
 module.exports = [
   {
+    entry: './app/app.js',
     commonsChunk: true,
     longTermCaching: true,
     separateStylesheet: false,
@@ -14,6 +15,7 @@ module.exports = [
   },
 
   {
+    entry: './app/app.js',
     prerender: true,
     minimize: true,
     devtool: 'source-map'
