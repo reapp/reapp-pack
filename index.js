@@ -17,6 +17,7 @@ function configName(mode) {
 // opts:
 //   dir: directory of project
 //   entry: entrypoint file
+//   wport: port for webpack-dev-server to run on
 //   mode: mode of build
 //   devtool: webpack devtool to use
 //   debug: log extra info
