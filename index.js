@@ -22,24 +22,27 @@ var linkModules = require('./lib/linkModules');
 
 var opts;
 
-module.exports = function(configs, _opts) {
-  opts = _opts;
+module.exports = {
+  makeConfig: function(configs, _opts) {
+    opts = _opts;
 
-  if (opts.debug) {
-    console.log('Link modules?', opts.linkModules);
-  }
+    if (opts.debug) {
+      console.log('Link modules?', opts.linkModules);
+    }
 
-  if (opts.linkModules)
-    linkModules(opts.dir);
+    if (opts.linkModules)
+      linkModules(opts.dir);
 
-  if (Array.isArray(configs))
-    return configs.map(makeConfig);
-  else
-    return makeConfig(configs);
-}
+    if (Array.isArray(configs))
+      return configs.map(_makeConfig);
+    else
+      return _makeConfig(configs);
+  },
 
+  webpack: webpack
+};
 
-function makeConfig(config) {
+function _makeConfig(config) {
   if (opts.debug) {
     console.log('Making webpack config with config:', config);
   }
@@ -144,7 +147,7 @@ function makeConfig(config) {
     // new webpack.NewWatchingPlugin(),
 
     // outputs build stats to ./build/stats.json
-    // statsPlugin(opts, config),
+    config.prerender ? statsPlugin(opts, config) : null,
 
     // optimize react building
     new webpack.PrefetchPlugin('react'),

@@ -7,9 +7,9 @@
 module.exports = [
   {
     entry: './app/app.js',
-    commonsChunk: true,
+    // commonsChunk: true,
     longTermCaching: true,
-    separateStylesheet: false,
+    separateStylesheet: true,
     minimize: true,
     devtool: 'source-map'
   },
@@ -17,7 +17,7 @@ module.exports = [
   {
     entry: './app/app.js',
     prerender: true,
-    minimize: true,
-    devtool: 'source-map'
+    // minimize: true,
+    // devtool: 'source-map'
   }
 ];

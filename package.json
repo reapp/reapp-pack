@@ -1,7 +1,7 @@
 {
-  "name": "reapp-webpack-config",
+  "name": "reapp-pack",
   "version": "1.0.0",
-  "description": "default webpack config for a reapp app",
+  "description": "create and build webpack configs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
