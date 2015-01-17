@@ -1,6 +1,8 @@
-// Sample development config
+// Default development config
 
 module.exports = {
   entry: './app/app.js',
-  devtool: 'eval'
+  devtool: 'eval',
+  target: 'client',
+  devServer: true
 };

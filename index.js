@@ -12,9 +12,10 @@ var linkModules = require('./lib/linkModules');
 
 // config:
 //   entry: entrypoint file
+//   target: 'node' or 'client'
+//   devServer: true/false for webpack-dev-server
 //   devtool: specify webpack devtool
 //   hot: use react-hot-loader
-//   prerender: compile bundle to ./build
 //   vendorChunk: split node_modules into vendor.js chunk
 //   commonsChunk: split common files into commons.js chunk
 //   longTermCaching: use hash name with files
@@ -39,6 +40,9 @@ module.exports = {
 };
 
 function _makeConfig(config) {
+  var node = config.target === 'node';
+  var client = config.target === 'client';
+
   if (opts.debug) {
     console.log("Making webpack config with:\n", config, "\n");
   }
@@ -56,7 +60,7 @@ function _makeConfig(config) {
     loaders.push({ test: /\.jsx$/, loader: 'react-hot' });
   }
 
-  if (config.prerender) {
+  if (node) {
     loaders.push({ test: jsTest, loader: ReactStylePlugin.loader() });
   }
 
@@ -77,7 +81,7 @@ function _makeConfig(config) {
   stylesheetLoaders.forEach(function(stylesheetLoader) {
     var loader = stylesheetLoader.loader;
 
-    if (config.prerender)
+    if (node)
       stylesheetLoader.loader = 'null-loader';
     else if (config.separateStylesheet)
       stylesheetLoader.loader = ExtractTextPlugin.extract('style-loader', loader);
@@ -116,17 +120,17 @@ function _makeConfig(config) {
 
   var output = {
     path: path.join(opts.dir, 'build',
-      config.prerender ? 'prerender' : 'public'),
+      node ? 'prerender' : 'public'),
 
     filename: '[name].js' +
-      (config.longTermCaching && !config.prerender ? '?[chunkhash]' : ''),
+      (config.longTermCaching ? '?[chunkhash]' : ''),
 
     chunkFilename: (config.commonsChunk ? '[name].js' : '[id].js') +
-      (config.longTermCaching && !config.prerender ? '?[chunkhash]' : ''),
+      (config.longTermCaching ? '?[chunkhash]' : ''),
 
     publicPath: '/',
     sourceMapFilename: 'debugging/[file].map',
-    libraryTarget: config.prerender ? 'commonjs2' : undefined,
+    libraryTarget: node ? 'commonjs2' : undefined,
     pathinfo: opts.debug
   };
 
@@ -149,19 +153,19 @@ function _makeConfig(config) {
     // set process.env for modules
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(config.prerender ? 'production' : 'development')
+        NODE_ENV: JSON.stringify(node ? 'production' : 'development')
       }
     })
   ];
 
   // outputs build stats to ./build/stats.json
-  if (config.prerender)
+  if (node)
     plugins.push(statsPlugin(opts, config));
 
-  // if (config.prerender)
+  // if (node)
   //   plugins.push(new ReactStylePlugin('bundle.css'));
 
-  if (config.prerender) {
+  if (node) {
     aliasLoader['react-proxy$'] = 'react-proxy/unavailable';
     externals.push(/^react(\/.*)?$/);
     plugins.push(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
@@ -181,12 +185,12 @@ function _makeConfig(config) {
   if (config.commonsChunk)
     plugins.push(
       new webpack.optimize.CommonsChunkPlugin('commons', 'commons.js' +
-        (config.longTermCaching && !config.prerender ? '?[chunkhash]' : '')));
+        (config.longTermCaching && !node ? '?[chunkhash]' : '')));
 
-  if (!config.prerender)
+  if (config.devServer && client)
     entry = joinEntry('webpack-dev-server/client?http://localhost:' + opts.wport, entry);
 
-  if (config.separateStylesheet && !config.prerender)
+  if (config.separateStylesheet)
     plugins.push(new ExtractTextPlugin('[name].css'));
 
   if (config.minimize)
@@ -201,7 +205,7 @@ function _makeConfig(config) {
   var webpackConfig = {
     entry: entry,
     output: output,
-    target: config.prerender ? 'node' : 'web',
+    target: node ? 'node' : 'web',
     module: {
       loaders: loaders.concat(stylesheetLoaders)
     },

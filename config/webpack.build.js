@@ -1,23 +1,22 @@
-// Sample production config
+// Default production config
 
-// splits into two bundles
-// 1. common files only with source map
-// 2. pre-rendered app
+var entry = './app/app.js';
 
 module.exports = [
+  // client
   {
-    entry: './app/app.js',
-    // commonsChunk: true,
+    entry: entry,
     longTermCaching: true,
     separateStylesheet: true,
     minimize: true,
-    devtool: 'source-map'
+    devtool: 'source-map',
+    target: 'client'
+    // commonsChunk: true
   },
 
+  // server
   {
-    entry: './app/app.js',
-    prerender: true,
-    // minimize: true,
-    // devtool: 'source-map'
+    entry: entry,
+    target: 'node'
   }
 ];
