@@ -159,8 +159,8 @@ function _makeConfig(config) {
   ];
 
   // outputs build stats to ./build/stats.json
-  if (node)
-    plugins.push(statsPlugin(opts, config));
+  // if (node)
+  //   plugins.push(statsPlugin(opts, config));
 
   // if (node)
   //   plugins.push(new ReactStylePlugin('bundle.css'));
