@@ -1,22 +1,11 @@
 // Default production config
 
-var entry = './app/app.js';
-
-module.exports = [
-  // client
-  {
-    entry: entry,
-    longTermCaching: true,
-    separateStylesheet: true,
-    minimize: true,
-    devtool: 'source-map',
-    target: 'client'
-    // commonsChunk: true
-  },
-
-  // server
-  {
-    entry: entry,
-    target: 'node'
-  }
-];
+module.exports = {
+  entry: './app/app.js',
+  longTermCaching: true,
+  separateStylesheet: true,
+  minimize: true,
+  devtool: 'source-map',
+  target: 'client'
+  // commonsChunk: true
+};
