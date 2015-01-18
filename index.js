@@ -6,6 +6,7 @@ var path = require('path');
 var webpack = require('webpack');
 var ReactStylePlugin = require('react-style-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var util = require('util');
 var joinEntry = require('./lib/joinEntry');
 var statsPlugin = require('./lib/statsPlugin');
 var linkModules = require('./lib/linkModules');
@@ -230,7 +231,7 @@ function _makeConfig(config) {
 
   if (opts.debug) {
     console.log('Webpack config:');
-    console.log(webpackConfig);
+    console.log(util.inspect(webpackConfig, { depth: 10 }));
     console.log();
   }
 
