@@ -25,4 +25,8 @@ config:
 
 Returns a valid webpack config.
 
+### Todo
+
+- generate the webpack.config.js to ./build
+
 ### MIT License

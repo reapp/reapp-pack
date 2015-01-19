@@ -28,13 +28,13 @@
     "nib": "~1.0.4",
     "stylus-loader": "~0.5.0",
     "react-router": "~0.11.6",
-    "webpack": "~1.4.14",
-    "webpack-dev-server": "~1.7.0",
     "6to5": "~2.7.4",
     "6to5-loader": "~1.0.0",
     "imports-loader": "~0.6.3",
     "file-loader": "~0.8.1",
-    "url-loader": "~0.5.5"
+    "url-loader": "~0.5.5",
+    "webpack": "~1.5.1",
+    "webpack-dev-server": "~1.7.0"
   },
   "devDependencies": {
     "mkdirp": "~0.5.0"
