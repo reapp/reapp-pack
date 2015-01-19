@@ -25,6 +25,7 @@ var linkModules = require('./lib/linkModules');
 var opts;
 
 module.exports = {
+  // takes a config object, or an array of config objects
   makeConfig: function(configs, _opts) {
     opts = _opts;
 
@@ -37,9 +38,11 @@ module.exports = {
       return _makeConfig(configs);
   },
 
+  // exports webpack
   webpack: webpack
 };
 
+// makes from a single config object
 function _makeConfig(config) {
   var node = config.target === 'node';
   var client = config.target === 'client';
@@ -143,9 +146,6 @@ function _makeConfig(config) {
     new webpack.ProvidePlugin({
        to5Runtime: "imports?global=>{}!exports-loader?global.to5Runtime!6to5/runtime"
      }),
-
-    // trying the new watching plugin
-    // new webpack.NewWatchingPlugin(),
 
     // optimize react building
     new webpack.PrefetchPlugin('react'),
