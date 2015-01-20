@@ -111,8 +111,8 @@ function _makeConfig(config) {
     'app'
   ];
 
-  var extensions = ['', '.js', '.jsx'];
-  var root = [path.join(opts.dir, 'app', 'app')];
+  var extensions = config.extensions || ['.js', '.jsx'];
+  var root = config.root || [path.join(opts.dir, 'app', 'app')];
 
   var output = {
     path: path.join(opts.dir, 'build',
@@ -139,17 +139,21 @@ function _makeConfig(config) {
        to5Runtime: "imports?global=>{}!exports-loader?global.to5Runtime!6to5/runtime"
      }),
 
-    // optimize react building
-    new webpack.PrefetchPlugin('react'),
-    new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
-
-    // set process.target for modules
+    // set target for modules
     new webpack.DefinePlugin({
       'process.target': {
-        NODE_ENV: JSON.stringify(node ? 'server' : 'client')
+        TARGET: JSON.stringify(node ? 'server' : 'client')
       }
     })
   ];
+
+  // prefetch
+  var prefetches = config.prefetch ||
+    ['react', 'react/lib/ReactComponentBrowserEnvironment'];
+
+  prefetches.forEach(function(prefetch) {
+    plugins.push(new webpack.PrefetchPlugin(prefetch));
+  });
 
   // outputs build stats to ./build/stats.json
   if (opts.debug)
@@ -164,10 +168,11 @@ function _makeConfig(config) {
     plugins.push(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
   }
 
-  if (opts.hot) {
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+  if (config.errors)
     plugins.push(new webpack.NoErrorsPlugin());
 
+  if (opts.hot) {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
     entry = joinEntry('webpack/hot/only-dev-server', entry);
   }
 
