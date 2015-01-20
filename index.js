@@ -17,7 +17,6 @@ var linkModules = require('./lib/linkModules');
 //   devServer: true/false for webpack-dev-server
 //   devtool: specify webpack devtool
 //   hot: use react-hot-loader
-//   vendorChunk: split node_modules into vendor.js chunk
 //   commonsChunk: split common files into commons.js chunk
 //   longTermCaching: use hash name with files
 //   minimize: uglify and dedupe
@@ -60,13 +59,11 @@ function _makeConfig(config) {
 
   var jsTest = /\.jsx?$/;
 
-  if (opts.hot) {
+  if (opts.hot)
     loaders.push({ test: /\.jsx$/, loader: 'react-hot' });
-  }
 
-  if (node) {
+  if (node)
     loaders.push({ test: jsTest, loader: ReactStylePlugin.loader() });
-  }
 
   loaders.push({
     test: jsTest,
@@ -103,23 +100,18 @@ function _makeConfig(config) {
     entry = { main: entry };
   }
 
-  if (config.vendorChunk)
-    entry.vendor = Object.keys(require(opts.dir + '/package.json').dependencies);
-
   var alias = {};
   var aliasLoader = {};
   var externals = [];
-  var modulesDirectories = [
-    'web_modules',
+  var modulesDirectories = config.modulesDirectories || [
     'node_modules',
     'server_modules',
-
-    // this adds a shorthand so you can require stuff from your
-    // app folder without needing all the relative path fragility
+    // this adds a shorthand so you can require anything in ./app
+    // without using relative paths
     'app'
   ];
 
-  var extensions = ['', '.web.js', '.js', '.jsx'];
+  var extensions = ['', '.js', '.jsx'];
   var root = [path.join(opts.dir, 'app', 'app')];
 
   var output = {
@@ -151,20 +143,20 @@ function _makeConfig(config) {
     new webpack.PrefetchPlugin('react'),
     new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
 
-    // set process.env for modules
+    // set process.target for modules
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(node ? 'production' : 'development')
+      'process.target': {
+        NODE_ENV: JSON.stringify(node ? 'server' : 'client')
       }
     })
   ];
 
   // outputs build stats to ./build/stats.json
-  // if (node)
-  //   plugins.push(statsPlugin(opts, config));
+  if (opts.debug)
+    plugins.push(statsPlugin(opts, config));
 
-  // if (node)
-  //   plugins.push(new ReactStylePlugin('bundle.css'));
+  if (config.separateStylesheet)
+    plugins.push(new ReactStylePlugin('bundle.css'));
 
   if (node) {
     aliasLoader['react-proxy$'] = 'react-proxy/unavailable';
@@ -177,10 +169,6 @@ function _makeConfig(config) {
     plugins.push(new webpack.NoErrorsPlugin());
 
     entry = joinEntry('webpack/hot/only-dev-server', entry);
-  }
-
-  if (config.vendorChunk) {
-    plugins.push(new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'));
   }
 
   if (config.commonsChunk)
