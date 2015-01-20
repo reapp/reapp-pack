@@ -113,7 +113,7 @@ function _makeConfig(config) {
   ];
 
   var extensions = config.extensions || ['', '.js', '.jsx'];
-  var root = config.root || [];
+  var root = config.root || [path.join(opts.dir, 'app', 'app')];
 
   var output = {
     path: path.join(opts.dir, 'build',
