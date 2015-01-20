@@ -2,6 +2,7 @@
 // to let you build different style bundles
 // based on the webpack react example
 
+var colors = require('colors');
 var path = require('path');
 var webpack = require('webpack');
 var ReactStylePlugin = require('react-style-webpack-plugin');
@@ -47,7 +48,7 @@ function _makeConfig(config) {
   var client = config.target === 'client';
 
   if (opts.debug) {
-    console.log("Making webpack config with:\n", config, "\n");
+    console.log("Making webpack config with:\n".bold.blue, config, "\n");
   }
 
   // LOADERS
@@ -223,7 +224,7 @@ function _makeConfig(config) {
   };
 
   if (opts.debug) {
-    console.log('Webpack config:');
+    console.log('Webpack config:'.bold.blue);
     console.log(util.inspect(webpackConfig, { depth: 10 }));
     console.log();
   }
