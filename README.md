@@ -1,32 +1,29 @@
 ## reapp-pack
 
-Based heavily on the official [webpack/react-starter](https://github.com/webpack/react-starter) repo.
+A helper for generating webpack configs, along with some small helpers.
+Includes `./webpackServer` for easy use of webpack-dev-server.
 
-Exposes an object with `webpack` and `makeConfig`.
+Based heavily on the official [webpack/react-starter](https://github.com/webpack/react-starter) repo.
 
 Webpack is just an export of the version of webpack used in this repository.
 
-### makeConfig
+### Usage
 
-Takes an array of, or a single config object. For now, I'm just pasting in the comments in code,
-as this is changing fast!
+See required files in `./config`.
 
-```
-config:
-  entry: entrypoint file
-  devtool: specify webpack devtool
-  hot: use react-hot-loader
-  prerender: compile bundle to ./build
-  vendorChunk: split node_modules into vendor.js chunk
-  commonsChunk: split common files into commons.js chunk
-  longTermCaching: use hash name with files
-  minimize: uglify and dedupe
+```js
+var config = require('./config/webpack.run.js');
+var webpackServer = require('reapp-pack/webpackServer');
+
+webpackServer(config, {
+  port: 3011,
+  debug: true,
+  hot: true
+});
 ```
 
-Returns a valid webpack config.
+### Options
 
-### Todo
-
-- generate the webpack.config.js to ./build
+See `./index.js`.
 
 ### MIT License

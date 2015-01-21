@@ -1,8 +1,10 @@
-// Default development config
+var pack = require('reapp-pack');
 
-module.exports = {
+module.exports = pack({
   entry: './app/app.js',
   devtool: 'eval',
   target: 'web',
-  server: true
-};
+  server: true,
+  port: 3011,
+  hot: true
+});

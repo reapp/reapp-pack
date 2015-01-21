@@ -1,8 +1,9 @@
 // Not working! But this would be the config
 
+var pack = require('reapp-pack');
 var entry = './app/app.js';
 
-module.exports = [
+module.exports = pack([
   // client
   {
     entry: entry,
@@ -11,7 +12,6 @@ module.exports = [
     minimize: true,
     devtool: 'source-map',
     target: 'client'
-    // commonsChunk: true
   },
 
   // server
@@ -19,4 +19,4 @@ module.exports = [
     entry: entry,
     target: 'node'
   }
-];
+]);

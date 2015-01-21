@@ -24,7 +24,7 @@ module.exports = function(config, opts) {
   var webpackDevServerOpts = {
     contentBase: opts.dir,
     quiet: false,
-    hot: true, // todo: make dynamic
+    hot: opts.hot, // todo: make dynamic
     progress: true,
     stats: {
       colors: true,
