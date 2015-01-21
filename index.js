@@ -15,35 +15,38 @@ var linkModules = require('./lib/linkModules');
 // config:
 //   entry: entrypoint file
 //   target: 'node' or 'client'
-//   devServer: true/false for webpack-dev-server
+//   server: true/false for webpack-dev-server
 //   devtool: specify webpack devtool
 //   hot: use react-hot-loader
 //   commonsChunk: split common files into commons.js chunk
 //   longTermCaching: use hash name with files
 //   minimize: uglify and dedupe
 
+// opts:
+//   debug (bool): output debug info
+//   linkModules (bool): link necessary webpack modules
+//   dir: (string): absolute path to app dir
+//   hot: (bool): use hot reloading
+//   wport (number): webpack port
+//   devtool (string): override config devtool
+
 var opts;
 
-module.exports = {
-  // takes a config object, or an array of config objects
-  makeConfig: function(configs, _opts) {
-    opts = _opts;
+// takes a config object, or an array of config objects
+module.exports = function(configs, _opts) {
+  opts = _opts;
 
-    if (opts.linkModules)
-      linkModules(opts.dir);
+  if (opts.linkModules)
+    linkModules(opts.dir);
 
-    if (Array.isArray(configs))
-      return configs.map(_makeConfig);
-    else
-      return _makeConfig(configs);
-  },
-
-  // exports webpack
-  webpack: webpack
+  if (Array.isArray(configs))
+    return configs.map(makeConfig);
+  else
+    return makeConfig(configs);
 };
 
 // makes from a single config object
-function _makeConfig(config) {
+function makeConfig(config) {
   var node = config.target === 'node';
   var client = config.target === 'client';
 
@@ -182,7 +185,7 @@ function _makeConfig(config) {
       new webpack.optimize.CommonsChunkPlugin('commons', 'commons.js' +
         (config.longTermCaching && !node ? '?[chunkhash]' : '')));
 
-  if (config.devServer && client)
+  if (config.server && client)
     entry = joinEntry('webpack-dev-server/client?http://localhost:' + opts.wport, entry);
 
   if (config.separateStylesheet)
@@ -219,6 +222,9 @@ function _makeConfig(config) {
       modulesDirectories: modulesDirectories,
       extensions: extensions,
       alias: alias,
+      fallback: [].concat(modulesDirectories).map(function(moduleDir) {
+        return opts.dir + '/' + moduleDir
+      })
     },
     plugins: plugins
   };

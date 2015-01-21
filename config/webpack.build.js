@@ -7,7 +7,6 @@ module.exports = {
   // minimize: true,
   devtool: 'eval',
   target: 'client',
-  errors: true,
-  devServer: true
+  errors: true
   // commonsChunk: true
 };
