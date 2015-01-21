@@ -1,10 +1,15 @@
-var pack = require('reapp-pack');
+var pack = require('..');
 
-module.exports = pack({
-  entry: './app/app.js',
-  devtool: 'eval',
-  target: 'web',
-  server: true,
-  port: 3011,
-  hot: true
-});
+require('reapp-object-assign');
+
+module.exports = function(opts) {
+  return pack(Object.assign({
+    entry: './app/app.js',
+    devtool: 'eval',
+    target: 'web',
+    hot: true,
+    server: true,
+    port: 3011,
+    debug: true
+  }, opts));
+}

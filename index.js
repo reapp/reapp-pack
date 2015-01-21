@@ -31,8 +31,12 @@ function makeAll(configs) {
 // makes from a single config object
 function make(config) {
   // defaults
-  config.dir = config.dir || process.env.DIR;
-  config.target = config.target || process.env.TARGET;
+  config.debug = process.env.DEBUG || config.debug;
+  config.dir = process.env.DIR || config.dir;
+  config.target = process.env.TARGET || config.target;
+
+  if (config.debug)
+    console.log('Generated config: ', config);
 
   // target
   var node = config.target === 'node';
