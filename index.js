@@ -47,8 +47,9 @@ module.exports = function(configs, _opts) {
 
 // makes from a single config object
 function makeConfig(config) {
+  var target = config.target;
   var node = config.target === 'node';
-  var client = config.target === 'client';
+  var web = config.target === 'web';
 
   if (opts.debug) {
     console.log("Making webpack config with:\n".bold.blue, config, "\n");
@@ -185,7 +186,7 @@ function makeConfig(config) {
       new webpack.optimize.CommonsChunkPlugin('commons', 'commons.js' +
         (config.longTermCaching && !node ? '?[chunkhash]' : '')));
 
-  if (config.server && client)
+  if (config.server && web)
     entry = joinEntry('webpack-dev-server/client?http://localhost:' + opts.wport, entry);
 
   if (config.separateStylesheet)
@@ -203,7 +204,7 @@ function makeConfig(config) {
   var webpackConfig = {
     entry: entry,
     output: output,
-    target: node ? 'node' : 'web',
+    target: target,
     module: {
       loaders: loaders.concat(stylesheetLoaders)
     },

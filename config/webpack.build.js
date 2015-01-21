@@ -5,8 +5,8 @@ module.exports = {
   // longTermCaching: true,
   // separateStylesheet: true,
   // minimize: true,
-  devtool: 'eval',
-  target: 'client',
+  devtool: 'source-map',
+  target: 'web',
   errors: true
   // commonsChunk: true
 };

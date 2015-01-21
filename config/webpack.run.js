@@ -3,6 +3,6 @@
 module.exports = {
   entry: './app/app.js',
   devtool: 'eval',
-  target: 'client',
+  target: 'web',
   server: true
 };
