@@ -30,16 +30,19 @@ function makeAll(configs) {
 
 // makes from a single config object
 function make(config) {
-  var target = config.target;
+  // defaults
+  config.dir = config.dir || process.env.DIR;
+  config.target = config.target || process.env.TARGET;
+
+  // target
   var node = config.target === 'node';
   var web = config.target === 'web';
 
-  if (config.debug) {
+  if (config.debug)
     console.log("Making webpack config with:\n".bold.blue, config, "\n");
-  }
 
   if (config.linkModules)
-    linkModules(config.dir + '/server_modules');
+    linkModules(dir + '/server_modules');
 
   // LOADERS
   var loaders = [
@@ -105,14 +108,14 @@ function make(config) {
 
   var extensions = config.extensions || ['', '.web.js', '.js', '.jsx'];
 
-  var root = config.root || [path.join(config.dir)];
+  var root = config.root || [path.join(dir)];
 
   var fallback = (config.fallback || ['node_modules', 'server_modules']).map(function(moduleDir) {
-    return config.dir + '/' + moduleDir
+    return dir + '/' + moduleDir
   })
 
   var output = {
-    path: path.join(config.dir, 'build',
+    path: path.join(dir, 'build',
       node ? 'prerender' : 'public'),
 
     filename: '[name].js' +
@@ -158,7 +161,7 @@ function make(config) {
 
   // outputs build stats to ./build/stats.json
   if (config.debug)
-    plugins.push(statsPlugin(config, config));
+    plugins.push(statsPlugin(config));
 
   if (config.separateStylesheet)
     plugins.push(new ReactStylePlugin('bundle.css'));
@@ -208,8 +211,8 @@ function make(config) {
     debug: config.debug,
     resolveLoader: {
       root: config.linkModules ?
-        path.join(config.dir, 'server_modules') :
-        path.join(config.dir, 'node_modules'),
+        path.join(dir, 'server_modules') :
+        path.join(dir, 'node_modules'),
       alias: aliasLoader
     },
     externals: externals,
