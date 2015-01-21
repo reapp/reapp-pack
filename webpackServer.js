@@ -22,9 +22,8 @@ module.exports = function(config, opts) {
   setConfigsBase(config, base);
 
   var webpackDevServerOpts = {
-    contentBase: '../', //opts.dir,
-    quiet: !opts.debug,
-    lazy: true,
+    contentBase: opts.dir,
+    quiet: false,
     hot: true, // todo: make dynamic
     progress: true,
     stats: {
@@ -39,9 +38,7 @@ module.exports = function(config, opts) {
       "\n", webpackDevServerOpts, "\n"
     );
 
-  var webpackServer = new WebpackDevServer(
-    webpack(config), webpackDevServerOpts
-  );
+  var webpackServer = new WebpackDevServer(webpack(config), webpackDevServerOpts);
 
   console.log('Starting Webpack server on', hostname, opts.port, '...');
   webpackServer.listen(opts.port, hostname);
