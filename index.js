@@ -17,8 +17,8 @@ var webpack = require('webpack');
 var ReactStylePlugin = require('react-style-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var util = require('util');
-var joinEntry = require('./joinEntry');
-var statsPlugin = require('./statsPlugin');
+var joinEntry = require('./lib/joinEntry');
+var statsPlugin = require('./lib/statsPlugin');
 var linkModules = require('./lib/linkModules');
 
 function makeAll(configs) {
@@ -42,7 +42,7 @@ function make(config) {
     console.log("Making webpack config with:\n".bold.blue, config, "\n");
 
   if (config.linkModules)
-    linkModules(dir + '/server_modules');
+    linkModules(config.dir + '/server_modules');
 
   // LOADERS
   var loaders = [
@@ -108,14 +108,14 @@ function make(config) {
 
   var extensions = config.extensions || ['', '.web.js', '.js', '.jsx'];
 
-  var root = config.root || [path.join(dir)];
+  var root = config.root || [path.join(config.dir)];
 
   var fallback = (config.fallback || ['node_modules', 'server_modules']).map(function(moduleDir) {
-    return dir + '/' + moduleDir
+    return config.dir + '/' + moduleDir
   })
 
   var output = {
-    path: path.join(dir, 'build',
+    path: path.join(config.dir, 'build',
       node ? 'prerender' : 'public'),
 
     filename: '[name].js' +
@@ -203,7 +203,7 @@ function make(config) {
   var webpackConfig = {
     entry: entry,
     output: output,
-    target: target,
+    target: config.target,
     module: {
       loaders: loaders.concat(stylesheetLoaders)
     },
@@ -211,8 +211,8 @@ function make(config) {
     debug: config.debug,
     resolveLoader: {
       root: config.linkModules ?
-        path.join(dir, 'server_modules') :
-        path.join(dir, 'node_modules'),
+        path.join(config.dir, 'server_modules') :
+        path.join(config.dir, 'node_modules'),
       alias: aliasLoader
     },
     externals: externals,
