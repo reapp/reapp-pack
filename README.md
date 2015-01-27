@@ -25,5 +25,3 @@ webpackServer(config, {
 ### Options
 
 See `./index.js`.
-
-### MIT License
