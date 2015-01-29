@@ -31,6 +31,7 @@ function makeAll(configs) {
 // makes from a single config object
 function make(config) {
   // defaults
+  config.env = config.env || 'development';
   config.debug = process.env.DEBUG || config.debug;
   config.dir = process.env.DIR || config.dir;
   config.target = process.env.TARGET || config.target;
@@ -148,7 +149,7 @@ function make(config) {
     // set process.env for modules
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(node ? 'production' : 'development'),
+        NODE_ENV: JSON.stringify(config.env),
         TARGET: JSON.stringify(node ? 'server' : 'client'),
         PLATFORM: JSON.stringify(config.platform || '')
       }
@@ -167,8 +168,9 @@ function make(config) {
   if (config.debug)
     plugins.push(statsPlugin(config));
 
-  if (config.separateStylesheet)
-    plugins.push(new ReactStylePlugin('bundle.css'));
+  // todo: awaiting new version of react-style
+  // if (config.separateStylesheet)
+  //   plugins.push(new ReactStylePlugin('bundle.css'));
 
   if (node) {
     aliasLoader['react-proxy$'] = 'react-proxy/unavailable';

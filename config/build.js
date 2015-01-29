@@ -7,6 +7,8 @@ module.exports = function(opts) {
     entry: './app/app.js',
     devtool: 'source-map',
     target: 'web',
-    debug: true
+    env: 'production',
+    debug: true,
+    separateStylesheet: true
   }, opts));
 }
