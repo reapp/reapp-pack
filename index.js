@@ -54,7 +54,8 @@ function make(config) {
     { test: /\.json$/, loader: 'json-loader' },
     { test: /\.png|jgp|jpeg|gif|svg$/, loader: 'url-loader?limit=10000' },
     { test: /\.html$/, loader: 'html-loader' }
-  ];
+  ]
+  .concat(config.loaders || []);
 
   var jsTest = /\.jsx?$/;
 
