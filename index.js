@@ -60,7 +60,7 @@ function make(config) {
   var jsTest = /\.jsx?$/;
 
   if (config.hot)
-    loaders.push({ test: /\.jsx$/, loader: 'react-hot' });
+    loaders.push({ test: jsTest, loader: 'react-hot' });
 
   // if (node)
   //   loaders.push({ test: jsTest, loader: ReactStylePlugin.loader() });
