@@ -14,7 +14,7 @@
 var colors = require('colors');
 var path = require('path');
 var webpack = require('webpack');
-var ReactStylePlugin = require('react-style-webpack-plugin');
+// var ReactStylePlugin = require('react-style-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var util = require('util');
 var joinEntry = require('./lib/joinEntry');
@@ -62,8 +62,8 @@ function make(config) {
   if (config.hot)
     loaders.push({ test: /\.jsx$/, loader: 'react-hot' });
 
-  if (node)
-    loaders.push({ test: jsTest, loader: ReactStylePlugin.loader() });
+  // if (node)
+  //   loaders.push({ test: jsTest, loader: ReactStylePlugin.loader() });
 
   loaders.push({
     test: jsTest,
