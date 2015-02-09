@@ -145,8 +145,6 @@ function make(config) {
        to5Runtime: "imports?global=>{}!exports-loader?global.to5Runtime!6to5/runtime"
      }),
 
-    new webpack.OldWatchingPlugin(),
-
     // set process.env for modules
     new webpack.DefinePlugin({
       'process.env': {
@@ -179,11 +177,9 @@ function make(config) {
     plugins.push(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
   }
 
-  if (config.errors)
-    plugins.push(new webpack.NoErrorsPlugin());
-
   if (config.hot) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
+    plugins.push(new webpack.NoErrorsPlugin());
     entry = joinEntry('webpack/hot/only-dev-server', entry);
   }
 
