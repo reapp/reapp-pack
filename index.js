@@ -35,6 +35,7 @@ function make(config) {
   config.debug = process.env.DEBUG || config.debug;
   config.dir = process.env.DIR || config.dir;
   config.target = process.env.TARGET || config.target;
+  config.hostname = config.hostname || 'localhost';
 
   if (config.debug)
     console.log('Generated config: ', config);
@@ -189,7 +190,7 @@ function make(config) {
         (config.longTermCaching && !node ? '?[chunkhash]' : '')));
 
   if (config.server && web)
-    entry = joinEntry('webpack-dev-server/client?http://localhost:' + config.port, entry);
+    entry = joinEntry('webpack-dev-server/client?http://' + config.hostname + ':' + config.port, entry);
 
   if (config.separateStylesheet)
     plugins.push(new ExtractTextPlugin('[name].css'));
@@ -204,6 +205,7 @@ function make(config) {
   // RETURN
 
   var webpackConfig = {
+    hostname: config.hostname,
     entry: entry,
     output: output,
     target: config.target,
