@@ -53,7 +53,7 @@ function make(config) {
   // LOADERS
   var loaders = [
     { test: /\.json$/, loader: 'json-loader' },
-    { test: /\.(png|jgp|jpeg|gif|svg)$/, loader: 'url-loader?limit=10000' },
+    { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?limit=10000' },
     { test: /\.html$/, loader: 'html-loader' }
   ]
   .concat(config.loaders || []);
