@@ -9,9 +9,8 @@
   "author": "Nate Wienert",
   "license": "MIT",
   "dependencies": {
-    "6to5": "^3.6.5",
-    "6to5-core": "^3.6.5",
-    "6to5-loader": "^3.0.0",
+    "babel": "^4.0.1",
+    "babel-loader": "^4.0.0",
     "autoprefixer-core": "~5.1.5",
     "autoprefixer-loader": "~1.1.0",
     "bundle-loader": "~0.5.3",
