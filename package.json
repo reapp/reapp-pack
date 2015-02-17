@@ -9,10 +9,10 @@
   "author": "Nate Wienert",
   "license": "MIT",
   "dependencies": {
-    "babel": "^4.0.1",
-    "babel-loader": "^4.0.0",
     "autoprefixer-core": "~5.1.5",
     "autoprefixer-loader": "~1.1.0",
+    "babel": "^4.0.1",
+    "babel-loader": "^4.0.0",
     "bundle-loader": "~0.5.3",
     "colors": "~1.0.3",
     "css-loader": "^0.9.1",
@@ -37,6 +37,7 @@
     "transform-loader": "^0.2.1",
     "url-loader": "^0.5.5",
     "webpack": "~1.5.3",
-    "webpack-dev-server": "~1.7.0"
+    "webpack-dev-server": "~1.7.0",
+    "worker-loader": "^0.5.7"
   }
 }

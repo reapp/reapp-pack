@@ -54,20 +54,19 @@ function make(config) {
   var loaders = [
     { test: /\.json$/, loader: 'json-loader' },
     { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?limit=10000' },
-    { test: /\.html$/, loader: 'html-loader' }
+    { test: /\.html$/, loader: 'html-loader' },
+    { test: /\.worker\.js$/, loader: 'worker-loader?inline=true' }
   ]
   .concat(config.loaders || []);
 
-  var jsTest = /\.jsx?$/;
-
   if (config.hot)
-    loaders.push({ test: jsTest, loader: 'react-hot' });
+    loaders.push({ test: /\.jsx$/, loader: 'react-hot' });
 
   // if (node)
-  //   loaders.push({ test: jsTest, loader: ReactStylePlugin.loader() });
+  //   loaders.push({ test: /\.jsx?$/, loader: ReactStylePlugin.loader() });
 
   loaders.push({
-    test: jsTest,
+    test: /\.jsx?$/,
     loader: 'babel-loader?experimental=true',
     exclude: /socket\.io/
   });
