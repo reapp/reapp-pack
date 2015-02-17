@@ -68,7 +68,7 @@ function make(config) {
 
   loaders.push({
     test: jsTest,
-    loader: '6to5-loader?experimental=true&runtime=true',
+    loader: 'babel-loader?experimental=true',
     exclude: /socket\.io/
   });
 
@@ -141,11 +141,6 @@ function make(config) {
   // PLUGINS
 
   var plugins = [
-    // provides a single 6to5 runtime, works in combination with &runtime=true on 6to5 loader
-    new webpack.ProvidePlugin({
-       to5Runtime: "imports?global=>{}!exports-loader?global.to5Runtime!6to5/runtime"
-     }),
-
     // set process.env for modules
     new webpack.DefinePlugin({
       'process.env': {
