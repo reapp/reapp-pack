@@ -193,7 +193,11 @@ function make(config) {
 
   if (config.minify)
     plugins.push(
-      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      }),
       new webpack.optimize.DedupePlugin()
     );
 
