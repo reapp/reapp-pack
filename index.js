@@ -54,7 +54,8 @@ function make(config) {
   // LOADERS
   var loaders = [
     { test: /\.json$/, loader: 'json-loader' },
-    { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: 'url-loader?limit=10000' },
+    { test: /\.(png|jpg|jpeg|gif)$/, loader: 'url-loader?limit=10000' },
+    { test: /\.svg$/, loader: 'raw-loader' },
     { test: /\.html$/, loader: 'html-loader' },
     { test: /\.worker\.js$/, loader: 'worker-loader?inline=true' }
   ]
