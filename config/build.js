@@ -10,6 +10,7 @@ module.exports = function(opts) {
     platform: 'ios',
     env: 'production',
     debug: true,
-    separateStylesheet: true
+    separateStylesheet: true,
+    minify: true
   }, opts));
 }

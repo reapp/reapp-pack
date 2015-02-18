@@ -5,7 +5,7 @@
 //   devtool: specify webpack devtool
 //   commonsChunk: split common files into commons.js chunk
 //   longTermCaching: use hash name with files
-//   minimize: uglify and dedupe
+//   minify: uglify and dedupe
 //   debug (bool): output debug info
 //   dir: (string): absolute path to app dir
 //   hot: (bool): use hot reloading
@@ -190,7 +190,7 @@ function make(config) {
   if (config.separateStylesheet)
     plugins.push(new ExtractTextPlugin('[name].css'));
 
-  if (config.minimize)
+  if (config.minify)
     plugins.push(
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.DedupePlugin()
