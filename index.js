@@ -36,6 +36,7 @@ function make(config) {
   config.dir = process.env.DIR || config.dir;
   config.target = process.env.TARGET || config.target;
   config.hostname = config.hostname || 'localhost';
+  config.platform = config.platform || 'web';
 
   if (config.debug)
     console.log('Generated config: ', config);
@@ -144,8 +145,8 @@ function make(config) {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(config.env),
-        TARGET: JSON.stringify(node ? 'server' : 'client'),
-        PLATFORM: JSON.stringify(config.platform || '')
+        TARGET: JSON.stringify(config.target),
+        PLATFORM: JSON.stringify(config.platform)
       }
     })
   ];

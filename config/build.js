@@ -7,6 +7,7 @@ module.exports = function(opts) {
     entry: './app/app.js',
     devtool: 'source-map',
     target: 'web',
+    platform: 'ios',
     env: 'production',
     debug: true,
     separateStylesheet: true
