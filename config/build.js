@@ -9,6 +9,12 @@ module.exports = function(opts) {
     target: 'web',
     env: 'production',
     debug: true,
-    separateStylesheet: true
+    separateStylesheet: true,
+    cordova: {
+      config: 'config.xml',
+      src: 'index.html',
+      platform: 'ios',
+      version: true
+    }
   }, opts));
 }

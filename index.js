@@ -16,6 +16,7 @@ var path = require('path');
 var webpack = require('webpack');
 // var ReactStylePlugin = require('react-style-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CordovaPlugin = require('webpack-cordova-plugin');
 var util = require('util');
 var joinEntry = require('./lib/joinEntry');
 var statsPlugin = require('./lib/statsPlugin');
@@ -165,6 +166,9 @@ function make(config) {
   // todo: awaiting new version of react-style
   // if (config.separateStylesheet)
   //   plugins.push(new ReactStylePlugin('bundle.css'));
+
+  if (config.cordova)
+    plugins.push(new CordovaPlugin(config.cordova));
 
   if (node) {
     aliasLoader['react-proxy$'] = 'react-proxy/unavailable';
