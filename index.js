@@ -69,7 +69,7 @@ function make(config) {
 
   loaders.push({
     test: /\.jsx?$/,
-    loader: 'babel-loader?experimental=true',
+    loader: 'babel-loader?experimental=true&optional=bluebirdCoroutines',
     exclude: /socket\.io/
   });
 
@@ -186,7 +186,7 @@ function make(config) {
         (config.longTermCaching && !node ? '?[chunkhash]' : '')));
 
   if (config.server && web)
-    entry = joinEntry('webpack-dev-server/client?http://' + config.hostname + ':' + config.port, entry);
+    entry = joinEntry('webpack-dev-server/client?http://' + config.hostname + ':' + (config.port || 3011), entry);
 
   if (config.separateStylesheet)
     plugins.push(new ExtractTextPlugin('[name].css'));
