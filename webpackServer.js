@@ -40,6 +40,6 @@ module.exports = function(config, opts) {
 
   var webpackServer = new WebpackDevServer(webpack(config), webpackDevServerOpts);
 
-  console.log('Starting Webpack server on', hostname, opts.port, '...');
+  console.log('Starting Webpack server on http://%s:%s', hostname, opts.port);
   webpackServer.listen(opts.port, hostname);
 };
