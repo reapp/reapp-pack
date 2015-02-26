@@ -36,7 +36,7 @@ function make(config) {
   config.dir = process.env.DIR || config.dir;
   config.target = process.env.TARGET || config.target;
   config.hostname = config.hostname || 'localhost';
-  config.platform = config.platform || 'web';
+  config.platform = config.platform;
 
   if (config.debug)
     console.log('Generated config: ', config);
@@ -54,9 +54,9 @@ function make(config) {
   // LOADERS
   var loaders = [
     { test: /\.json$/, loader: 'json-loader' },
-    { test: /\.(png|jpg|jpeg|gif)$/, loader: 'url-loader?limit=10000' },
+    { test: /\.(png|jpg|jpeg|gif)$/, loader: 'url-loader?limit=10000&name=[name].[ext]' },
     { test: /\.svg$/, loader: 'raw-loader' },
-    { test: /\.html$/, loader: 'html-loader' },
+    { test: /\.html$/, loader: 'file-loader?name=[name].[ext]' },
     { test: /\.worker\.js$/, loader: 'worker-loader?inline=true' }
   ]
   .concat(config.loaders || []);

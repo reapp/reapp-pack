@@ -5,7 +5,7 @@ require('reapp-object-assign');
 module.exports = function(opts) {
   return pack(Object.assign({
     entry: './app/app.js',
-    devtool: 'source-map',
+    devtool: 'none',
     target: 'web',
     env: 'production',
     debug: true,
