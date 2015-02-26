@@ -38,9 +38,6 @@ function make(config) {
   config.hostname = config.hostname || 'localhost';
   config.platform = config.platform;
 
-  if (config.debug)
-    console.log('Generated config: ', config);
-
   // target
   var node = config.target === 'node';
   var web = config.target === 'web';
