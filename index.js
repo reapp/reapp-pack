@@ -46,7 +46,7 @@ function make(config) {
     console.log("Making webpack config with:\n".bold.blue, config, "\n");
 
   if (config.linkModules)
-    linkModules(config.dir + '/server_modules');
+    linkModules(config, config.dir + '/server_modules');
 
   // LOADERS
   var loaders = [
