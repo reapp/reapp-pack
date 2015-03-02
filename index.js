@@ -144,7 +144,7 @@ function make(config) {
       'process.env': {
         NODE_ENV: JSON.stringify(config.env),
         TARGET: JSON.stringify(config.target),
-        PLATFORM: JSON.stringify(config.platform)
+        PLATFORM: JSON.stringify(config.platform || 'web')
       }
     })
   ];
