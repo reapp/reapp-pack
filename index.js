@@ -121,7 +121,7 @@ function make(config) {
 
   var output = {
     path: path.join(config.dir, 'build',
-      node ? 'prerender' : 'public'),
+      node ? 'prerender' : config.platform || 'public'),
 
     filename: '[name].js' +
       (config.longTermCaching ? '?[chunkhash]' : ''),
