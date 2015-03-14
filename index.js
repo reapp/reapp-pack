@@ -20,6 +20,7 @@ var util = require('util');
 var joinEntry = require('./lib/joinEntry');
 var statsPlugin = require('./lib/statsPlugin');
 var linkModules = require('./lib/linkModules');
+var getExcludedModules = require('./lib/getExcludedModules');
 
 function makeAll(configs) {
   if (Array.isArray(configs))
@@ -67,7 +68,7 @@ function make(config) {
   loaders.push({
     test: /\.jsx?$/,
     loader: 'babel-loader?experimental=true&optional=bluebirdCoroutines',
-    exclude: /socket\.io/ // node_modules
+    exclude: getExcludedModules(config)
   });
 
   // style loaders
