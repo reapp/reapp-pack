@@ -67,7 +67,7 @@ function make(config) {
   loaders.push({
     test: /\.jsx?$/,
     loader: 'babel-loader?experimental=true&optional=bluebirdCoroutines',
-    exclude: /socket\.io/
+    exclude: /socket\.io|node_modules/ // node_modules
   });
 
   // style loaders
