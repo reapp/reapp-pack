@@ -24,7 +24,7 @@ module.exports = function(config, opts) {
   var webpackDevServerOpts = {
     contentBase: opts.dir,
     quiet: false,
-    hot: opts.hot, // todo: make dynamic
+    hot: opts.hot,
     progress: true,
     stats: {
       colors: true,
@@ -40,7 +40,7 @@ module.exports = function(config, opts) {
 
   var webpackServer = new WebpackDevServer(webpack(config), webpackDevServerOpts);
 
-  console.log('Starting Webpack...');
+  console.log('Running Webpack...');
 
   if (opts.debug)
     console.log('Webpack server on http://%s:%s', hostname, opts.port);
