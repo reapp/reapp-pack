@@ -1,6 +1,6 @@
 {
   "name": "reapp-pack",
-  "version": "1.3.17",
+  "version": "1.3.18",
   "description": "create and build webpack configs",
   "main": "index.js",
   "scripts": {
