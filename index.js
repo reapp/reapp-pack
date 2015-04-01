@@ -199,6 +199,13 @@ function make(config) {
       new webpack.optimize.DedupePlugin()
     );
 
+  // globals will be in every module
+  if (config.globals)
+    plugins.push(new webpack.ProvidePlugin(config.globals));
+
+  // user defined plugins
+  if (config.plugins)
+    plugins.push(config.plugins);
 
   // RETURN
 
