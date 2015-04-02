@@ -67,7 +67,7 @@ function make(config) {
 
   loaders.push({
     test: /\.jsx?$/,
-    loader: 'babel-loader?experimental=true&optional=bluebirdCoroutines',
+    loader: 'babel-loader?stage=0&optional=bluebirdCoroutines',
     exclude: getExcludedModules(config)
   });
 
