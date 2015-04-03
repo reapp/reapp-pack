@@ -67,7 +67,7 @@ function make(config) {
 
   loaders.push({
     test: /\.jsx?$/,
-    loader: 'babel-loader?stage=0&optional=bluebirdCoroutines',
+    loader: 'babel-loader?{"stage": 0, "optional": ["optimisation.react.constantElements", "bluebirdCoroutines"]}',
     exclude: getExcludedModules(config)
   });
 

@@ -1,5 +1,4 @@
 module.exports = {
-  entry: './app/app.js',
   devtool: 'eval',
   target: 'web',
   linkModules: true,
