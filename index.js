@@ -20,7 +20,6 @@ var util = require('util');
 var joinEntry = require('./lib/joinEntry');
 var statsPlugin = require('./lib/statsPlugin');
 var linkModules = require('./lib/linkModules');
-var getExcludedModules = require('./lib/getExcludedModules');
 
 function makeAll(configs) {
   if (Array.isArray(configs))
@@ -65,10 +64,17 @@ function make(config) {
   // if (node)
   //   loaders.push({ test: /\.jsx?$/, loader: ReactStylePlugin.loader() });
 
+  try {
+    var entry = require(config.dir + '/package.json')["main"];
+    var entryDir = path.normalize(path.dirname(config.dir + '/' + entry));
+  }
+  catch (e) {}
+
   loaders.push({
     test: /\.jsx?$/,
     loader: 'babel-loader?{"stage": 0, "optional": ["optimisation.react.constantElements", "bluebirdCoroutines"]}',
-    exclude: getExcludedModules(config)
+    include: entryDir || config.dir + '/app',
+    exclude: /node_modules/
   });
 
   // style loaders
