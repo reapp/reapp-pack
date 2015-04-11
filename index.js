@@ -106,9 +106,9 @@ function make(config) {
     entry = { main: entry };
   }
 
-  var alias = {};
-  var aliasLoader = {};
-  var externals = [];
+  var alias = config.alias || {};
+  var aliasLoader = config.aliasLoader || {};
+  var externals = config.externals || [];
   var modulesDirectories = config.modulesDirectories || [
     'node_modules',
     'web_modules',
