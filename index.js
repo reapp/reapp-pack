@@ -220,9 +220,9 @@ function make(config) {
     entry: entry,
     output: output,
     target: config.target,
-    module: {
+    module: Object.assign({
       loaders: loaders.concat(stylesheetLoaders)
-    },
+    }, config.module),
     devtool: config.devtool || 'eval',
     debug: config.debug,
     resolveLoader: {
