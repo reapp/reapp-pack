@@ -1,5 +1,5 @@
 module.exports = {
-  devtool: 'souce-map',
+  devtool: 'source-map',
   target: 'web',
   linkModules: true,
   hot: true,
