@@ -72,7 +72,7 @@ function make(config) {
 
   loaders.push({
     test: /\.jsx?$/,
-    loader: 'babel-loader?{"stage": 0, "optional": ["optimisation.react.constantElements", "bluebirdCoroutines"]}',
+    loader: 'babel-loader?{"stage": 0, "optional": ["bluebirdCoroutines"]}',
     include: entryDir || config.dir + '/app',
     exclude: /node_modules/
   });
