@@ -211,8 +211,10 @@ function make(config) {
     plugins.push(new webpack.ProvidePlugin(config.globals));
 
   // user defined plugins
-  if (config.plugins)
-    plugins.push(config.plugins);
+  if(config.plugins)
+    config.plugins.forEach(function(plugin){
+      plugins.push(plugin)
+    });
 
   // RETURN
 
